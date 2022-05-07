@@ -4,9 +4,11 @@ from asgiref.sync import async_to_sync
 
 
 class ChatConsumer(WebsocketConsumer):
-    def connect(self):
+    def __init__(self, *args, **kwargs):
+        super().__init__(args, kwargs)
         self.room_group_name = 'test'
 
+    def connect(self):
         async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
